@@ -40,17 +40,17 @@ void addBook(Node **head, Book newBook, string filename){
 // Deklarasi fungsi untuk menampilkan semua buku dalam linked list
 void displayBooks(Node *head){
     if (head == NULL){
-        cout << "No books found." << endl;
+        cout << "Tidak ada buku yang ditemukan" << endl;
         return;
     }
     Node *temp = head;
     while (temp != NULL){
-        cout << "Drawer: " << temp->data.drawer << endl;
-        cout << "Code: " << temp->data.code << endl;
-        cout << "Title: " << temp->data.title << endl;
-        cout << "Author: " << temp->data.author << endl;
-        cout << "Year: " << temp->data.year << endl;
-        cout << "Quantity: " << temp->data.quantity << endl;
+        cout << "Laci : " << temp->data.drawer << endl;
+        cout << "Kode : " << temp->data.code << endl;
+        cout << "Judul : " << temp->data.title << endl;
+        cout << "Penulis : " << temp->data.author << endl;
+        cout << "Tahun : " << temp->data.year << endl;
+        cout << "Jumlah : " << temp->data.quantity << endl;
         cout << endl;
         temp = temp->next;
     }
@@ -59,32 +59,29 @@ void displayBooks(Node *head){
 // Deklarasi fungsi untuk mencari buku berdasarkan judul/kode
 void searchBook(Node *head, string tempo){
     if (head == NULL){
-        cout << "No books found." << endl;
+        cout << "Tidak ada buku yang ditemukan" << endl;
         return;
     }
     Node *temp = head;
     while (temp != NULL){
         if (temp->data.title == tempo || temp->data.code == tempo){
-            cout << "Drawer: " << temp->data.drawer << endl;
-            cout << "Code: " << temp->data.code << endl;
-            cout << "Title: " << temp->data.title << endl;
-            cout << "Author: " << temp->data.author << endl;
-            cout << "Year: " << temp->data.year << endl;
-            cout << "Quantity: " << temp->data.quantity << endl;
-            cout << endl;
+            cout << "Laci : " << temp->data.drawer << endl;
+            cout << "Kode : " << temp->data.code << endl;
+            cout << "Judul : " << temp->data.title << endl;
+            cout << "Penulis : " << temp->data.author << endl;
+            cout << "Tahun : " << temp->data.year << endl;
+            cout << "Jumlah : " << temp->data.quantity << endl;
             return;
         }
         temp = temp->next;
     }
-
-    cout << "Book not found." << endl;
+    cout << "Buku tidak ditemukan" << endl;
 }
 
 // Deklarasi fungsi untuk menghapus buku berdasarkan judul/kode
-void removeBook(Node **head, string tempo)
-{
+void removeBook(Node **head, string tempo){
     if (*head == NULL){
-        cout << "No books found." << endl;
+        cout << "Tidak ada buku yang ditemukan" << endl;
         return;
     }
     Node *temp = *head;
@@ -97,7 +94,7 @@ void removeBook(Node **head, string tempo)
             else{
                 prev->next = temp->next;
             }
-            cout << "title :" << temp->data.title << "code :" << temp->data.code << " has been removed." << endl;
+            cout << "Judul :" << temp->data.title << "  Kode :" << temp->data.code << " telah dihapus" << endl;
             delete temp;
             return;
         }
@@ -106,14 +103,11 @@ void removeBook(Node **head, string tempo)
     }
 }
 
-int Drawer(Node **head, string filename, string tempo)
-{
+int Drawer(Node **head, string filename, string tempo){
     ifstream file(filename);
-    if (!file.is_open()){
-        // handle error: could not open file
+    if (!file.is_open()){ // handle error: could not open file
         return -1;
     }
-
     int i = 0;
     string line;
     while (getline(file, line)){
@@ -132,7 +126,6 @@ int Drawer(Node **head, string filename, string tempo)
         newBook.author = token[3];
         newBook.year = stoi(token[4]);
         newBook.quantity = stoi(line);
-
         if (token[0] == tempo){
             i = i + stoi(line);
         }
@@ -143,33 +136,26 @@ int Drawer(Node **head, string filename, string tempo)
 // Deklarasi fungsi untuk menghapus buku berdasarkan judul/kode
 void changeBook(Node *head, string tempo){
     if (head == NULL){
-        cout << "No books found." << endl;
+        cout << "Tidak ada buku yang ditemukan" << endl;
         return;
     }
     Node *temp = head;
     while (temp != NULL){
         if (temp->data.title == tempo || temp->data.code == tempo){
-            cout << "Drawer: " << temp->data.drawer << endl;
-            cout << "Code: " << temp->data.code << endl;
-            cout << "Title: " << temp->data.title << endl;
-            cout << "Author: " << temp->data.author << endl;
-            cout << "Year: " << temp->data.year << endl;
-            cout << "Quantity: " << temp->data.quantity << endl;
+            cout << "Laci : " << temp->data.drawer << endl;
+            cout << "Kode : " << temp->data.code << endl;
+            cout << "Judul : " << temp->data.title << endl;
+            cout << "Penulis : " << temp->data.author << endl;
+            cout << "Tahun : " << temp->data.year << endl;
+            cout << "Jumlah : " << temp->data.quantity << endl;
             cout << endl;
 
-            cout << "Enter new code: ";
-            cin >> temp->data.code;
-            cout << "Enter new title: ";
-            cin >> temp->data.title;
-            cout << "Enter new author: ";
-            cin >> temp->data.author;
-            cout << "Enter new year: ";
-            cin >> temp->data.year;
-            cout << "Enter new quantity: ";
-            cin >> temp->data.quantity;
-            cout << endl;
-
-            cout << "title : " << temp->data.title << "code : " << temp->data.code << " has been change" << endl;
+            cout << "Masukan kode baru : ";     cin >> temp->data.code;
+            cout << "Masukan judul baru : ";    cin >> temp->data.title;
+            cout << "Masukan penulis baru : ";   cin >> temp->data.author;
+            cout << "Masukan tanggal baru: ";     cin >> temp->data.year;
+            cout << "Masukan jumlah baru : ";   cin >> temp->data.quantity;
+            cout << "Judul : " << temp->data.title << "  Kode : " << temp->data.code << " telah diubah" << endl;
             return;
         }
         temp = temp->next;
@@ -196,7 +182,7 @@ void loadData(Node **head, string filename){
     file.open(filename);
 
     if (!file){
-        cout << "Error: cannot open file." << endl;
+        cout << "Eror : Tidak bisa membuka file" << endl;
         return;
     }
     string line;
@@ -216,77 +202,67 @@ void loadData(Node **head, string filename){
         newBook.author = token[3];
         newBook.year = stoi(token[4]);
         newBook.quantity = stoi(line);
-
-        // Menambah buku ke linked list
-        addBook(head, newBook, filename);
+        addBook(head, newBook, filename); // Menambah buku ke linked list
     }
     file.close();
 }
 
 int main(){
     Node *head = NULL;
-
-    // Memuat data buku dari file txt
-    loadData(&head, "books.txt");
-
+    loadData(&head, "books.txt"); // Memuat data buku dari file txt
     int choice;
-    do{
-        // Menampilkan menu
+    do{ // Menampilkan menu
         cout << "Menu:" << endl;
-        cout << "1. Add book" << endl;
-        cout << "2. Display all books" << endl;
-        cout << "3. Search book" << endl;
-        cout << "4. Remove book" << endl;
-        cout << "5. Change book" << endl;
-        cout << "6. Quit" << endl;
-        cout << "Enter your choice: ";
+        cout << "1. Menambahkan buku" << endl;
+        cout << "2. Tampilkan semua buku" << endl;
+        cout << "3. Mencari buku" << endl;
+        cout << "4. Hapus buku" << endl;
+        cout << "5. Mengganti buku" << endl;
+        cout << "6. Keluar" << endl;
+        cout << "Masukkan pilihan: ";
         cin >> choice;
-
         switch (choice){
         case 1:{
-            // Menambah buku
             Book newBook;
             string tempo;
 
-            cout << "Enter drawer :";
+            cout << "Masukan nama laci: ";
             cin.ignore();
             getline(cin, tempo);
             int a = Drawer(&head, "books.txt", tempo);
             if (a >= 100){
-                cout << "Drawer is full" << endl;
+                cout << "Laci telah penuh" << endl;
             }
             else{
-                cout << a << endl;
-                cout << "Enter title: ";
-                cin.ignore();
+                cout << "Masukan judul : ";
                 getline(cin, newBook.title);
-                cout << "Enter author: ";
+                cout << "Masukan nama penulis : ";
                 getline(cin, newBook.author);
-                cout << "Enter year: ";
+                cout << "Masukan tanggal dibuat : ";
                 cin >> newBook.year;
-                cout << "Enter quantity: ";
+                cout << "Masukan jumlah buku : ";
                 cin >> newBook.quantity;
                 int b = a + newBook.quantity;
                 if (b > 100){
-                    cout << "Drawer is full" << endl;
+                    cout << "Laci telah penuh (tidak bisa menambahkan buku lagi)" << endl;
                     break;
                 }
-                cout << "Enter code: ";
+                cout << "Masukan kode buku :";
                 cin >> newBook.code;
                 newBook.drawer = tempo;
                 addBook(&head, newBook, "books.txt");
-                cout << newBook.title << " has been added." << endl;
+                cout << newBook.title << " telah ditambahkan" << endl;
                 saveData(head, "books.txt");
+                system("cls");
             }
             break;
         }
         case 2:{
-            // Menampilkan semua buku
-            displayBooks(head);
+            displayBooks(head); // Menampilkan semua buku
             break;
         }
         case 3:{
-            cout << "Enter code/title";
+            cout << "Masukan kode buku / judul buku : ";
             string tempo;
             cin.ignore();
             getline(cin, tempo);
@@ -295,7 +271,7 @@ int main(){
             break;
         }
         case 4:{
-            cout << "Enter code/title";
+            cout << "Masukan kode buku / judul buku : ";
             string tempo;
             cin.ignore();
             getline(cin, tempo);
@@ -304,7 +280,7 @@ int main(){
             break;
         }
         case 5:{
-            cout << "Enter code/title";
+            cout << "Masukan kode buku / judul buku : ";
             string tempo;
             cin.ignore();
             getline(cin, tempo);
@@ -313,12 +289,11 @@ int main(){
             break;
         }
         case 6:{
-            // Keluar dari program
-            cout << "Goodbye!" << endl;
+            cout << "Selamat tinggal" << endl; // Keluar dari program
             break;
         }
         default:{
-            cout << "Invalid choice. Please try again." << endl;
+            cout << "Pilihan anda salah" << endl;
             break;
             }
         }
