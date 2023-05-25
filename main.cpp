@@ -5,8 +5,7 @@
 using namespace std;
 
 // Deklarasi struct untuk data buku
-struct Book
-{
+struct Book{
     string title;
     string author;
     string code;
@@ -16,43 +15,36 @@ struct Book
 };
 
 // Deklarasi struct untuk node dalam linked list
-struct Node
-{
+struct Node{
     Book data;
     Node *next;
 };
 
 // Deklarasi fungsi untuk menambah buku ke linked list
-void addBook(Node **head, Book newBook, string filename)
-{
+void addBook(Node **head, Book newBook, string filename){
     Node *newNode = new Node;
     newNode->data = newBook;
     newNode->next = NULL;
 
-    if (*head == NULL)
-    {
+    if (*head == NULL){
         *head = newNode;
         return;
     }
     Node *temp = *head;
-    while (temp->next != NULL)
-    {
+    while (temp->next != NULL){
         temp = temp->next;
     }
     temp->next = newNode;
 }
 
 // Deklarasi fungsi untuk menampilkan semua buku dalam linked list
-void displayBooks(Node *head)
-{
-    if (head == NULL)
-    {
+void displayBooks(Node *head){
+    if (head == NULL){
         cout << "No books found." << endl;
         return;
     }
     Node *temp = head;
-    while (temp != NULL)
-    {
+    while (temp != NULL){
         cout << "Drawer: " << temp->data.drawer << endl;
         cout << "Code: " << temp->data.code << endl;
         cout << "Title: " << temp->data.title << endl;
@@ -65,18 +57,14 @@ void displayBooks(Node *head)
 }
 
 // Deklarasi fungsi untuk mencari buku berdasarkan judul/kode
-void searchBook(Node *head, string tempo)
-{
-    if (head == NULL)
-    {
+void searchBook(Node *head, string tempo){
+    if (head == NULL){
         cout << "No books found." << endl;
         return;
     }
     Node *temp = head;
-    while (temp != NULL)
-    {
-        if (temp->data.title == tempo || temp->data.code == tempo)
-        {
+    while (temp != NULL){
+        if (temp->data.title == tempo || temp->data.code == tempo){
             cout << "Drawer: " << temp->data.drawer << endl;
             cout << "Code: " << temp->data.code << endl;
             cout << "Title: " << temp->data.title << endl;
@@ -95,23 +83,18 @@ void searchBook(Node *head, string tempo)
 // Deklarasi fungsi untuk menghapus buku berdasarkan judul/kode
 void removeBook(Node **head, string tempo)
 {
-    if (*head == NULL)
-    {
+    if (*head == NULL){
         cout << "No books found." << endl;
         return;
     }
     Node *temp = *head;
     Node *prev = NULL;
-    while (temp != NULL)
-    {
-        if (temp->data.title == tempo || temp->data.code == tempo)
-        {
-            if (prev == NULL)
-            {
+    while (temp != NULL){
+        if (temp->data.title == tempo || temp->data.code == tempo){
+            if (prev == NULL){
                 *head = temp->next;
             }
-            else
-            {
+            else{
                 prev->next = temp->next;
             }
             cout << "title :" << temp->data.title << "code :" << temp->data.code << " has been removed." << endl;
@@ -126,22 +109,19 @@ void removeBook(Node **head, string tempo)
 int Drawer(Node **head, string filename, string tempo)
 {
     ifstream file(filename);
-    if (!file.is_open())
-    {
+    if (!file.is_open()){
         // handle error: could not open file
         return -1;
     }
 
     int i = 0;
     string line;
-    while (getline(file, line))
-    {
+    while (getline(file, line)){
         Book newBook;
         int pos = 0; // posisi koma
         string token[5];
 
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++){
             pos = line.find(",");           // mencari posisi koma
             token[i] = line.substr(0, pos); // mengambil string dari posisi 0 sampai posisi koma
             line.erase(0, pos + 1);         // menghapus string dari posisi 0 sampai posisi koma
@@ -153,8 +133,7 @@ int Drawer(Node **head, string filename, string tempo)
         newBook.year = stoi(token[4]);
         newBook.quantity = stoi(line);
 
-        if (token[0] == tempo)
-        {
+        if (token[0] == tempo){
             i = i + stoi(line);
         }
     }
@@ -162,18 +141,14 @@ int Drawer(Node **head, string filename, string tempo)
 }
 
 // Deklarasi fungsi untuk menghapus buku berdasarkan judul/kode
-void changeBook(Node *head, string tempo)
-{
-    if (head == NULL)
-    {
+void changeBook(Node *head, string tempo){
+    if (head == NULL){
         cout << "No books found." << endl;
         return;
     }
     Node *temp = head;
-    while (temp != NULL)
-    {
-        if (temp->data.title == tempo || temp->data.code == tempo)
-        {
+    while (temp != NULL){
+        if (temp->data.title == tempo || temp->data.code == tempo){
             cout << "Drawer: " << temp->data.drawer << endl;
             cout << "Code: " << temp->data.code << endl;
             cout << "Title: " << temp->data.title << endl;
@@ -202,14 +177,12 @@ void changeBook(Node *head, string tempo)
 }
 
 // Deklarasi fungsi untuk menyimpan data buku ke file txt
-void saveData(Node *head, string filename)
-{
+void saveData(Node *head, string filename){
     ofstream file;
     file.open(filename);
 
     Node *temp = head;
-    while (temp != NULL)
-    {
+    while (temp != NULL){
         file << temp->data.drawer << "," << temp->data.code << "," << temp->data.title << "," << temp->data.author << ","
              << temp->data.year << "," << temp->data.quantity << endl;
         temp = temp->next;
@@ -218,25 +191,21 @@ void saveData(Node *head, string filename)
 }
 
 // Deklarasi fungsi untuk memuat data buku dari file txt
-void loadData(Node **head, string filename)
-{
+void loadData(Node **head, string filename){
     ifstream file;
     file.open(filename);
 
-    if (!file)
-    {
+    if (!file){
         cout << "Error: cannot open file." << endl;
         return;
     }
     string line;
-    while (getline(file, line))
-    {
+    while (getline(file, line)){
         Book newBook;
         int pos = 0; // posisi koma
         string token[5];
 
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++){
             pos = line.find(",");           // mencari posisi koma
             token[i] = line.substr(0, pos); // mengambil string dari posisi 0 sampai posisi koma
             line.erase(0, pos + 1);         // menghapus string dari posisi 0 sampai posisi koma
@@ -254,16 +223,14 @@ void loadData(Node **head, string filename)
     file.close();
 }
 
-int main()
-{
+int main(){
     Node *head = NULL;
 
     // Memuat data buku dari file txt
     loadData(&head, "books.txt");
 
     int choice;
-    do
-    {
+    do{
         // Menampilkan menu
         cout << "Menu:" << endl;
         cout << "1. Add book" << endl;
@@ -275,10 +242,8 @@ int main()
         cout << "Enter your choice: ";
         cin >> choice;
 
-        switch (choice)
-        {
-        case 1:
-        {
+        switch (choice){
+        case 1:{
             // Menambah buku
             Book newBook;
             string tempo;
@@ -287,12 +252,10 @@ int main()
             cin.ignore();
             getline(cin, tempo);
             int a = Drawer(&head, "books.txt", tempo);
-            if (a >= 100)
-            {
+            if (a >= 100){
                 cout << "Drawer is full" << endl;
             }
-            else
-            {
+            else{
                 cout << a << endl;
                 cout << "Enter title: ";
                 cin.ignore();
@@ -304,8 +267,7 @@ int main()
                 cout << "Enter quantity: ";
                 cin >> newBook.quantity;
                 int b = a + newBook.quantity;
-                if (b > 100)
-                {
+                if (b > 100){
                     cout << "Drawer is full" << endl;
                     break;
                 }
@@ -318,14 +280,12 @@ int main()
             }
             break;
         }
-        case 2:
-        {
+        case 2:{
             // Menampilkan semua buku
             displayBooks(head);
             break;
         }
-        case 3:
-        {
+        case 3:{
             cout << "Enter code/title";
             string tempo;
             cin.ignore();
@@ -334,8 +294,7 @@ int main()
             cout << endl;
             break;
         }
-        case 4:
-        {
+        case 4:{
             cout << "Enter code/title";
             string tempo;
             cin.ignore();
@@ -344,8 +303,7 @@ int main()
             saveData(head, "books.txt");
             break;
         }
-        case 5:
-        {
+        case 5:{
             cout << "Enter code/title";
             string tempo;
             cin.ignore();
@@ -354,17 +312,15 @@ int main()
             saveData(head, "books.txt");
             break;
         }
-        case 6:
-        {
+        case 6:{
             // Keluar dari program
             cout << "Goodbye!" << endl;
             break;
         }
-        default:
-        {
+        default:{
             cout << "Invalid choice. Please try again." << endl;
             break;
-        }
+            }
         }
     } while (choice != 6);
     return 0;
