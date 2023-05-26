@@ -3,6 +3,7 @@
 #include <string>
 
 using namespace std;
+int Quanty_byDrawer = 100;
 
 // Deklarasi struct untuk data buku
 struct Book{
@@ -103,15 +104,12 @@ void removeBook(Node **head, string tempo){
     }
 }
 
-int Drawer(Node **head, string filename, string tempo){
+Book Return(Node **head, string filename, string tempo){
     ifstream file(filename);
-    if (!file.is_open()){ // handle error: could not open file
-        return -1;
-    }
     int i = 0;
+    Book newBook;
     string line;
     while (getline(file, line)){
-        Book newBook;
         int pos = 0; // posisi koma
         string token[5];
 
@@ -127,10 +125,10 @@ int Drawer(Node **head, string filename, string tempo){
         newBook.year = stoi(token[4]);
         newBook.quantity = stoi(line);
         if (token[0] == tempo){
-            i = i + stoi(line);
+            newBook.quantity = newBook.quantity + newBook.quantity;
         }
     }
-    return i;
+    return newBook;
 }
 
 // Deklarasi fungsi untuk menghapus buku berdasarkan judul/kode
@@ -229,8 +227,8 @@ int main(){
             cout << "Masukan nama laci: ";
             cin.ignore();
             getline(cin, tempo);
-            int a = Drawer(&head, "books.txt", tempo);
-            if (a >= 100){
+            Book myResult = Return(&head, "books.txt", tempo);
+            if (myResult.quantity >= Quanty_byDrawer){
                 cout << "Laci telah penuh" << endl;
             }
             else{
@@ -242,13 +240,17 @@ int main(){
                 cin >> newBook.year;
                 cout << "Masukan jumlah buku : ";
                 cin >> newBook.quantity;
-                int b = a + newBook.quantity;
+                int b = myResult.quantity + newBook.quantity;
                 if (b > 100){
                     cout << "Laci telah penuh (tidak bisa menambahkan buku lagi)" << endl;
                     break;
                 }
                 cout << "Masukan kode buku :";
                 cin >> newBook.code;
+                if(newBook.code == myResult.code){
+                    cout << "Kode buku telah digunakan" << endl;
+                    break;
+                }
                 newBook.drawer = tempo;
                 addBook(&head, newBook, "books.txt");
                 cout << newBook.title << " telah ditambahkan" << endl;
