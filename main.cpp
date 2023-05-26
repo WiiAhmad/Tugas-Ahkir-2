@@ -3,7 +3,6 @@
 #include <string>
 
 using namespace std;
-int Quanty_byDrawer = 100;
 
 // Deklarasi struct untuk data buku
 struct Book{
@@ -125,7 +124,7 @@ Book Return(Node **head, string filename, string tempo){
         newBook.year = stoi(token[4]);
         newBook.quantity = stoi(line);
         if (token[0] == tempo){
-            newBook.quantity = newBook.quantity + newBook.quantity;
+            newBook.quantity = newBook.quantity + stoi(line);
         }
     }
     return newBook;
@@ -228,7 +227,7 @@ int main(){
             cin.ignore();
             getline(cin, tempo);
             Book myResult = Return(&head, "books.txt", tempo);
-            if (myResult.quantity >= Quanty_byDrawer){
+            if (myResult.quantity >= 100){
                 cout << "Laci telah penuh" << endl;
             }
             else{
@@ -255,7 +254,6 @@ int main(){
                 addBook(&head, newBook, "books.txt");
                 cout << newBook.title << " telah ditambahkan" << endl;
                 saveData(head, "books.txt");
-                system("cls");
             }
             break;
         }
