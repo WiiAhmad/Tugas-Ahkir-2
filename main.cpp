@@ -93,31 +93,34 @@ void removeBook(Node **head, string tempo){
     }
 }
 
-Book Return(Node **head, string filename, string tempo){
+Book Return(string filename, string tempo) {
     ifstream file(filename);
-    int i = 0;
-    Book result;
+    Book newBook;
     string line;
-    string token[5];
-    while (getline(file, line)){
+    int totalQuantity = 0;
+    while (getline(file, line)) {
         int pos = 0; // posisi koma
+        string token[5];
 
-        for (int i = 0; i < 5; i++){
-            pos = line.find(",");           // mencari posisi koma
-            token[i] = line.substr(0, pos); // mengambil string dari posisi 0 sampai posisi koma
-            line.erase(0, pos + 1);         // menghapus string dari posisi 0 sampai posisi koma
+        for (int i = 0; i < 5; i++) {
+            pos = line.find(",");
+            token[i] = line.substr(0, pos);
+            line.erase(0, pos + 1);
         }
-        result.drawer = token[0];
-        result.code = token[1];
-        result.title = token[2];
-        result.author = token[3];
-        result.year = stoi(token[4]);
-        result.quantity = stoi(line);
+        newBook.drawer = token[0];
+        newBook.code = token[1];
+        newBook.title = token[2];
+        newBook.author = token[3];
+        newBook.year = stoi(token[4]);
+        newBook.quantity = stoi(line);
+        if (newBook.drawer == tempo) {
+            // Jika laci sama dengan tempo, tambahkan jumlah buku yang baru saja dibaca
+            totalQuantity += newBook.quantity;
+        }
     }
-    if (token[0] == tempo){
-            result.quantity = result.quantity + stoi(line);
-        }
-    return result;
+    // Atur jumlah buku yang baru saja dibaca pada objek buku yang akan dikembalikan
+    newBook.quantity = totalQuantity;
+    return newBook;
 }
 
 // Deklarasi fungsi untuk menghapus buku berdasarkan judul/kode
@@ -211,7 +214,7 @@ int main(){
             cout << "Masukan nama laci: ";
             cin.ignore();
             getline(cin, tempo);
-            Book result = Return(&head, "books.txt", tempo);
+            Book result = Return("books.txt", tempo);
             cout << result.quantity << endl;
             if (result.quantity >= 100){
                 cout << "Laci telah penuh" << endl;
