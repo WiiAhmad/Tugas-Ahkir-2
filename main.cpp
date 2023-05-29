@@ -45,13 +45,8 @@ void displayBooks(Node *head){
     }
     Node *temp = head;
     while (temp != NULL){
-        cout << "Laci : " << temp->data.drawer << endl;
-        cout << "Kode : " << temp->data.code << endl;
-        cout << "Judul : " << temp->data.title << endl;
-        cout << "Penulis : " << temp->data.author << endl;
-        cout << "Tahun : " << temp->data.year << endl;
-        cout << "Jumlah : " << temp->data.quantity << endl;
-        cout << endl;
+        cout << "Laci : " << temp->data.drawer << "\t" << "Kode : " << temp->data.code << "\t" << "Judul : " << temp->data.title << "\t\t" << "Penulis : " << temp->data.author;
+        cout << "\t" << "Tahun : " << temp->data.year << "\t" << "Jumlah : " << temp->data.quantity << endl;
         temp = temp->next;
     }
 }
@@ -65,12 +60,7 @@ void searchBook(Node *head, string tempo){
     Node *temp = head;
     while (temp != NULL){
         if (temp->data.title == tempo || temp->data.code == tempo){
-            cout << "Laci : " << temp->data.drawer << endl;
-            cout << "Kode : " << temp->data.code << endl;
-            cout << "Judul : " << temp->data.title << endl;
-            cout << "Penulis : " << temp->data.author << endl;
-            cout << "Tahun : " << temp->data.year << endl;
-            cout << "Jumlah : " << temp->data.quantity << endl;
+            cout << "Laci : " << temp->data.drawer << "\t" << "Kode : " << temp->data.code << "\t" << "Judul : " << temp->data.title << "\t" << "Penulis : " << temp->data.author << "\t" << "Tahun : " << temp->data.year << "\t" << "Jumlah : " << temp->data.quantity << endl;
             return;
         }
         temp = temp->next;
@@ -106,28 +96,28 @@ void removeBook(Node **head, string tempo){
 Book Return(Node **head, string filename, string tempo){
     ifstream file(filename);
     int i = 0;
-    Book newBook;
+    Book result;
     string line;
+    string token[5];
     while (getline(file, line)){
         int pos = 0; // posisi koma
-        string token[5];
 
         for (int i = 0; i < 5; i++){
             pos = line.find(",");           // mencari posisi koma
             token[i] = line.substr(0, pos); // mengambil string dari posisi 0 sampai posisi koma
             line.erase(0, pos + 1);         // menghapus string dari posisi 0 sampai posisi koma
         }
-        newBook.drawer = token[0];
-        newBook.code = token[1];
-        newBook.title = token[2];
-        newBook.author = token[3];
-        newBook.year = stoi(token[4]);
-        newBook.quantity = stoi(line);
-        if (token[0] == tempo){
-            newBook.quantity = newBook.quantity + stoi(line);
-        }
+        result.drawer = token[0];
+        result.code = token[1];
+        result.title = token[2];
+        result.author = token[3];
+        result.year = stoi(token[4]);
+        result.quantity = stoi(line);
     }
-    return newBook;
+    if (token[0] == tempo){
+            result.quantity = result.quantity + stoi(line);
+        }
+    return result;
 }
 
 // Deklarasi fungsi untuk menghapus buku berdasarkan judul/kode
@@ -139,12 +129,7 @@ void changeBook(Node *head, string tempo){
     Node *temp = head;
     while (temp != NULL){
         if (temp->data.title == tempo || temp->data.code == tempo){
-            cout << "Laci : " << temp->data.drawer << endl;
-            cout << "Kode : " << temp->data.code << endl;
-            cout << "Judul : " << temp->data.title << endl;
-            cout << "Penulis : " << temp->data.author << endl;
-            cout << "Tahun : " << temp->data.year << endl;
-            cout << "Jumlah : " << temp->data.quantity << endl;
+            cout << "Laci : " << temp->data.drawer << "\t" << "Kode : " << temp->data.code << "\t" << "Judul : " << temp->data.title << "\t" << "Penulis : " << temp->data.author << "\t" << "Tahun : " << temp->data.year << "\t" << "Jumlah : " << temp->data.quantity << endl;
             cout << endl;
 
             cout << "Masukan kode baru : ";     cin >> temp->data.code;
@@ -226,8 +211,9 @@ int main(){
             cout << "Masukan nama laci: ";
             cin.ignore();
             getline(cin, tempo);
-            Book myResult = Return(&head, "books.txt", tempo);
-            if (myResult.quantity >= 100){
+            Book result = Return(&head, "books.txt", tempo);
+            cout << result.quantity << endl;
+            if (result.quantity >= 100){
                 cout << "Laci telah penuh" << endl;
             }
             else{
@@ -239,14 +225,14 @@ int main(){
                 cin >> newBook.year;
                 cout << "Masukan jumlah buku : ";
                 cin >> newBook.quantity;
-                int b = myResult.quantity + newBook.quantity;
+                int b = result.quantity + newBook.quantity;
                 if (b > 100){
                     cout << "Laci telah penuh (tidak bisa menambahkan buku lagi)" << endl;
                     break;
                 }
                 cout << "Masukan kode buku :";
                 cin >> newBook.code;
-                if(newBook.code == myResult.code){
+                if(newBook.code == result.code){
                     cout << "Kode buku telah digunakan" << endl;
                     break;
                 }
