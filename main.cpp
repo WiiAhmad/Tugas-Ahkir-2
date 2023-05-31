@@ -36,10 +36,11 @@ void addBook(Node **head, Book newBook, string filename){
 
 // Deklarasi fungsi untuk menampilkan semua buku dalam linked list
 void displayBooks(Node *head){
+    //system("cls");
     if (head == NULL){
-        cout<<"==================================================================================\n";
-        cout<<"|| 			TIDAK ADA BUKU YANG DITEMUKAN 				||\n";
-        cout<<"==================================================================================\n";
+        cout<<"==========================================================================================\n";
+        cout<<"|| 			    TIDAK ADA BUKU YANG DITEMUKAN 			    	||\n";
+        cout<<"==========================================================================================\n";
         return;
     }
     Node *temp = head;
@@ -52,7 +53,7 @@ void displayBooks(Node *head){
         cout<<setw(15)<<temp->data.author<<setw(15)<<temp->data.year<<setw(13)<<temp->data.quantity<<"\t||"<<endl;
         temp = temp->next;
     }
-    cout<<"==========================================================================================\n";
+    cout<<"==========================================================================================" << endl;
 }
 
 // Deklarasi fungsi untuk mencari buku berdasarkan judul/kode
@@ -72,15 +73,16 @@ void searchBook(Node *head, string tempo){
             cout<<"||  "<<setw(7)<<temp->data.drawer<<setw(10)<<temp->data.code<<setw(16)<<temp->data.title;
             cout<<setw(15)<<temp->data.author<<setw(15)<<temp->data.year<<setw(13)<<temp->data.quantity<<"\t||"<<endl;
             cout<<"==========================================================================================\n";
+            cout << "Ketik apapun untuk kembali ke menu utama :"; cin.ignore();
             return;
         }
         temp = temp->next;
     }
-    cout << "Buku tidak ditemukan" << endl;
 }
 
 // Deklarasi fungsi untuk menghapus buku berdasarkan judul/kode
 void removeBook(Node **head, string tempo){
+    //system("cls");
     if (*head == NULL){
         cout<<"==================================================================================\n";
         cout<<"|| 			TIDAK ADA BUKU YANG DITEMUKAN 				||\n";
@@ -138,6 +140,7 @@ Book Return(string filename, string tempo) {
 
 // Deklarasi fungsi untuk menghapus buku berdasarkan judul/kode
 void changeBook(Node *head, string tempo){
+    string wadahJudulSementara, wadahAuthorSementara;
     if (head == NULL){
         cout<<"==================================================================================\n";
         cout<<"|| 			TIDAK ADA BUKU YANG DITEMUKAN!!! 				||\n";
@@ -152,12 +155,10 @@ void changeBook(Node *head, string tempo){
         if (temp->data.title == tempo || temp->data.code == tempo){
             cout<<"||  "<<setw(7)<<temp->data.drawer<<setw(10)<<temp->data.code<<setw(16)<<temp->data.title;
             cout<<setw(15)<<temp->data.author<<setw(15)<<temp->data.year<<setw(13)<<temp->data.quantity<<"\t||"<<endl;
-            cout<<"==========================================================================================\n";
-            cout << endl;
-
-            cout << "Masukan kode baru : ";     cin >> temp->data.code;
-            cout << "Masukan judul baru : ";    cin >> temp->data.title;
-            cout << "Masukan penulis baru : ";   cin >> temp->data.author;
+            cout<<"==========================================================================================\n\n";
+            temp->data.code;
+            cout << "Masukan judul baru : ";    getline(cin, wadahJudulSementara); temp->data.title=wadahJudulSementara;
+            cout << "Masukan penulis baru : ";   getline(cin, wadahAuthorSementara); temp->data.author=wadahAuthorSementara;
             cout << "Masukan tanggal baru: ";     cin >> temp->data.year;
             cout << "Masukan jumlah baru : ";   cin >> temp->data.quantity;
             cout<<"==========================================================================================\n";
@@ -231,6 +232,7 @@ int main(){
         cout << "||                 6. Keluar                                                            ||" << endl;
         cout<<"==========================================================================================\n";
         cout << "Masukan pilihan anda: "; cin >> choice;
+        // system("cls");
         switch (choice){
         case 1:{
             Book newBook;
@@ -240,7 +242,7 @@ int main(){
             cin.ignore();
             getline(cin, tempo);
             Book result = Return("books.txt", tempo);
-            cout << result.quantity << endl;
+            cout << "Laci ini sudah berisi : " << result.quantity << " buku " << endl;
             if (result.quantity >= 100){
                 cout << "Laci telah penuh" << endl;
             }
@@ -249,7 +251,7 @@ int main(){
                 getline(cin, newBook.title);
                 cout << "Masukan nama penulis : ";
                 getline(cin, newBook.author);
-                cout << "Masukan tanggal dibuat : ";
+                cout << "Masukan tahun terbit : ";
                 cin >> newBook.year;
                 cout << "Masukan jumlah buku : ";
                 cin >> newBook.quantity;
@@ -266,8 +268,9 @@ int main(){
                 }
                 newBook.drawer = tempo;
                 addBook(&head, newBook, "books.txt");
-                cout << newBook.title << " telah ditambahkan" << endl;
+                cout << "buku : " << newBook.title << " telah ditambahkan" << endl;
                 saveData(head, "books.txt");
+                // system("cls");
             }
             break;
         }
