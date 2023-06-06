@@ -17,17 +17,19 @@ struct Node{
     Node *next;
 };
 
+Node *head = NULL;
 // Deklarasi fungsi untuk menambah buku ke linked list
-void addBook(Node **head, Book newBook, string filename){
+void addBook(Book newBook, string filename){
     Node *newNode = new Node;
     newNode->data = newBook;
     newNode->next = NULL;
+    Node *temp = head;
 
-    if (*head == NULL){
-        *head = newNode;
+    if (head == NULL){
+        head = newNode;
         return;
     }
-    Node *temp = *head;
+    
     while (temp->next != NULL){
         temp = temp->next;
     }
@@ -35,15 +37,16 @@ void addBook(Node **head, Book newBook, string filename){
 }
 
 // Deklarasi fungsi untuk menampilkan semua buku dalam linked list
-void displayBooks(Node *head){
+void displayBooks(){
     //system("cls");
+    Node *temp = head;
     if (head == NULL){
         cout<<"==========================================================================================\n";
         cout<<"|| 			    TIDAK ADA BUKU YANG DITEMUKAN 			    	||\n";
         cout<<"==========================================================================================\n";
         return;
     }
-    Node *temp = head;
+    
     cout<<"==========================================================================================\n";
     cout<<"||    LACI        KODE	      JUDUL BUKU        PENULIS	       TAHUN	    JUMLAH      ||\n";
     cout<<"==========================================================================================\n";
@@ -57,14 +60,14 @@ void displayBooks(Node *head){
 }
 
 // Deklarasi fungsi untuk mencari buku berdasarkan judul/kode
-void searchBook(Node *head, string tempo){
+void searchBook(string tempo){
+    Node *temp = head;
     if (head == NULL){
         cout<<"==================================================================================\n";
         cout<<"|| 			TIDAK ADA BUKU YANG DITEMUKAN 				||\n";
         cout<<"==================================================================================\n";
         return;
     }
-    Node *temp = head;
     cout<<"==========================================================================================\n";
     cout<<"||    LACI        KODE	      JUDUL BUKU        PENULIS	       TAHUN	    JUMLAH      ||\n";
     cout<<"==========================================================================================\n";
@@ -81,20 +84,20 @@ void searchBook(Node *head, string tempo){
 }
 
 // Deklarasi fungsi untuk menghapus buku berdasarkan judul/kode
-void removeBook(Node **head, string tempo){
+void removeBook(string tempo){
     //system("cls");
-    if (*head == NULL){
+    Node *temp = head;
+    Node *prev = NULL;
+    if (head == NULL){
         cout<<"==================================================================================\n";
         cout<<"|| 			TIDAK ADA BUKU YANG DITEMUKAN 				||\n";
         cout<<"==================================================================================\n";
         return;
     }
-    Node *temp = *head;
-    Node *prev = NULL;
     while (temp != NULL){
         if (temp->data.title == tempo || temp->data.code == tempo){
             if (prev == NULL){
-                *head = temp->next;
+                head = temp->next;
             }
             else{
                 prev->next = temp->next;
@@ -139,7 +142,8 @@ Book Return(string filename, string tempo) {
 }
 
 // Deklarasi fungsi untuk menghapus buku berdasarkan judul/kode
-void changeBook(Node *head, string tempo){
+void changeBook(string tempo){
+    Node *temp = head;
     string wadahJudulSementara, wadahAuthorSementara;
     if (head == NULL){
         cout<<"==================================================================================\n";
@@ -147,7 +151,6 @@ void changeBook(Node *head, string tempo){
         cout<<"==================================================================================\n";
         return;
     }
-    Node *temp = head;
     cout<<"==========================================================================================\n";
     cout<<"||    LACI        KODE	      JUDUL BUKU        PENULIS	       TAHUN	    JUMLAH      ||\n";
     cout<<"==========================================================================================\n";
@@ -172,11 +175,11 @@ void changeBook(Node *head, string tempo){
 }
 
 // Deklarasi fungsi untuk menyimpan data buku ke file txt
-void saveData(Node *head, string filename){
+void saveData(string filename){
+    Node *temp = head;
     ofstream file;
     file.open(filename);
 
-    Node *temp = head;
     while (temp != NULL){
         file << temp->data.drawer << "," << temp->data.code << "," << temp->data.title << "," << temp->data.author << ","
              << temp->data.year << "," << temp->data.quantity << endl;
@@ -186,7 +189,7 @@ void saveData(Node *head, string filename){
 }
 
 // Deklarasi fungsi untuk memuat data buku dari file txt
-void loadData(Node **head, string filename){
+void loadData(string filename){
     ifstream file;
     file.open(filename);
 
@@ -211,14 +214,14 @@ void loadData(Node **head, string filename){
         newBook.author = token[3];
         newBook.year = stoi(token[4]);
         newBook.quantity = stoi(line);
-        addBook(head, newBook, filename); // Menambah buku ke linked list
+        addBook(newBook, filename); // Menambah buku ke linked list
     }
     file.close();
 }
 
 int main(){
-    Node *head = NULL;
-    loadData(&head, "books.txt"); // Memuat data buku dari file txt
+    //Node *head = NULL;
+    loadData("books.txt"); // Memuat data buku dari file txt
     int choice;
     do{ // Menampilkan menu
         cout<<"==========================================================================================\n";
@@ -267,15 +270,15 @@ int main(){
                     break;
                 }
                 newBook.drawer = tempo;
-                addBook(&head, newBook, "books.txt");
+                addBook(newBook, "books.txt");
                 cout << "buku : " << newBook.title << " telah ditambahkan" << endl;
-                saveData(head, "books.txt");
+                saveData("books.txt");
                 // system("cls");
             }
             break;
         }
         case 2:{
-            displayBooks(head); // Menampilkan semua buku
+            displayBooks(); // Menampilkan semua buku
             break;
         }
         case 3:{
@@ -283,7 +286,7 @@ int main(){
             string tempo;
             cin.ignore();
             getline(cin, tempo);
-            searchBook(head, tempo);
+            searchBook(tempo);
             cout << endl;
             break;
         }
@@ -292,8 +295,8 @@ int main(){
             string tempo;
             cin.ignore();
             getline(cin, tempo);
-            removeBook(&head, tempo);
-            saveData(head, "books.txt");
+            removeBook(tempo);
+            saveData("books.txt");
             break;
         }
         case 5:{
@@ -301,8 +304,8 @@ int main(){
             string tempo;
             cin.ignore();
             getline(cin, tempo);
-            changeBook(head, tempo);
-            saveData(head, "books.txt");
+            changeBook(tempo);
+            saveData("books.txt");
             break;
         }
         case 6:{
