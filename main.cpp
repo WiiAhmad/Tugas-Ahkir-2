@@ -57,10 +57,12 @@ void displayBooks(){
         temp = temp->next;
     }
     cout<<"==========================================================================================" << endl;
+    cout << "Ketik apapun untuk kembali ke menu utama :"; cin.ignore();
 }
 
 // Deklarasi fungsi untuk mencari buku berdasarkan judul/kode
 void searchBook(string tempo){
+    //system("cls");
     Node *temp = head;
     if (head == NULL){
         cout<<"==================================================================================\n";
@@ -87,7 +89,7 @@ void searchBook(string tempo){
 void removeBook(string tempo){
     //system("cls");
     Node *temp = head;
-    Node *prev = NULL;
+    Node *del = NULL; //node clone buat dihapus nanti
     if (head == NULL){
         cout<<"==================================================================================\n";
         cout<<"|| 			TIDAK ADA BUKU YANG DITEMUKAN 				||\n";
@@ -95,20 +97,25 @@ void removeBook(string tempo){
         return;
     }
     while (temp != NULL){
+        //putaran pertama untuk ngecek barkal dihead yang sama kodenya kaya tempo
         if (temp->data.title == tempo || temp->data.code == tempo){
-            if (prev == NULL){
+            if (del == NULL){
                 head = temp->next;
             }
             else{
-                prev->next = temp->next;
+                del->next = temp->next;
             }
-            cout << "Judul :" << temp->data.title << "  Kode :" << temp->data.code << " telah dihapus" << endl;
+            cout<<"==================================================================================\n";
+            cout << "||   JUDUL : " << temp->data.title << "   KODE : " << temp->data.code << "  TELAH DIHAPUS    ||" << endl;
+            cout<<"==================================================================================\n";
             delete temp;
             return;
         }
-        prev = temp;
+        //ini deklarasi buat nanti pas putaran selanjutnya
+        del = temp;
         temp = temp->next;
     }
+    cout << "Ketik apapun untuk kembali ke menu utama :"; cin.ignore();
 }
 
 Book Return(string filename, string tempo) {
@@ -172,6 +179,7 @@ void changeBook(string tempo){
         }
         temp = temp->next;
     }
+    cout << "Ketik apapun untuk kembali ke menu utama :"; cin.ignore();
 }
 
 // Deklarasi fungsi untuk menyimpan data buku ke file txt
