@@ -144,7 +144,7 @@ Book Return(string filename, string tempo) {
 // Deklarasi fungsi untuk menghapus buku berdasarkan judul/kode
 void changeBook(string tempo){
     Node *temp = head;
-    string wadahJudulSementara, wadahAuthorSementara;
+    string tempTitle, tempAuthor;
     if (head == NULL){
         cout<<"==================================================================================\n";
         cout<<"|| 			TIDAK ADA BUKU YANG DITEMUKAN!!! 				||\n";
@@ -160,8 +160,8 @@ void changeBook(string tempo){
             cout<<setw(15)<<temp->data.author<<setw(15)<<temp->data.year<<setw(13)<<temp->data.quantity<<"\t||"<<endl;
             cout<<"==========================================================================================\n\n";
             temp->data.code;
-            cout << "Masukan judul baru : ";    getline(cin, wadahJudulSementara); temp->data.title=wadahJudulSementara;
-            cout << "Masukan penulis baru : ";   getline(cin, wadahAuthorSementara); temp->data.author=wadahAuthorSementara;
+            cout << "Masukan judul baru : ";    getline(cin, tempTitle); temp->data.title=tempTitle;
+            cout << "Masukan penulis baru : ";   getline(cin, tempAuthor); temp->data.author=tempAuthor;
             cout << "Masukan tanggal baru: ";     cin >> temp->data.year;
             cout << "Masukan jumlah baru : ";   cin >> temp->data.quantity;
             cout<<"==========================================================================================\n";
