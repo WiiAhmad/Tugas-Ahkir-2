@@ -38,7 +38,7 @@ void addBook(Book newBook, string filename){    // fungsi untuk menambah buku ke
 
 // Deklarasi fungsi untuk menampilkan semua buku dalam linked list
 void displayBooks(){    // fungsi untuk menampilkan semua buku dalam linked list
-    //system("cls");
+    system("cls");
     Node *temp = head;  // deklarasi variabel temp bertipe Node
     if (head == NULL){  // jika head bernilai NULL
         cout<<"==========================================================================================\n";    
@@ -58,11 +58,12 @@ void displayBooks(){    // fungsi untuk menampilkan semua buku dalam linked list
     }
     cout<<"==========================================================================================" << endl;
     cout << "Ketik apapun untuk kembali ke menu utama :"; cin.ignore(); // menunggu inputan user
+    cout << endl;   // menampilkan baris kosong
 }
 
 // Deklarasi fungsi untuk mencari buku berdasarkan judul/kode
 void searchBook(string tempo){  // fungsi untuk mencari buku berdasarkan judul/kode
-    //system("cls");
+    system("cls");
     Node *temp = head;  // deklarasi variabel temp bertipe Node
     if (head == NULL){  // jika head bernilai NULL
         cout<<"==================================================================================\n";
@@ -87,7 +88,7 @@ void searchBook(string tempo){  // fungsi untuk mencari buku berdasarkan judul/k
 
 // Deklarasi fungsi untuk menghapus buku berdasarkan judul/kode
 void removeBook(string tempo){  // fungsi untuk menghapus buku berdasarkan judul/kode
-    //system("cls");
+    system("cls");
     Node *temp = head;  // deklarasi variabel temp bertipe Node
     int a;  // deklarasi variabel a bertipe integer
     Node *del = NULL;   // deklarasi variabel del bertipe Node
@@ -127,6 +128,7 @@ void removeBook(string tempo){  // fungsi untuk menghapus buku berdasarkan judul
         temp = temp->next;  // temp diisi dengan next temp
     }
     cout << "Ketik apapun untuk kembali ke menu utama :"; cin.ignore(); // menunggu inputan user
+    cout << endl;   // menampilkan baris kosong
 }
 
 Book Return(string filename, string tempo) {    // fungsi untuk mengembalikan buku
@@ -149,7 +151,7 @@ Book Return(string filename, string tempo) {    // fungsi untuk mengembalikan bu
         newBook.author = token[3];  // mengisi author newBook dengan token[3]
         newBook.year = stoi(token[4]);  // mengisi year newBook dengan token[4]
         newBook.quantity = stoi(line);  // mengisi quantity newBook dengan line
-        if (newBook.drawer == tempo) {  
+        if (newBook.drawer == tempo || newBook.code == tempo || newBook.title == tempo) {
             // Jika laci sama dengan tempo, tambahkan jumlah buku yang baru saja dibaca
             totalQuantity += newBook.quantity;  
         }
@@ -172,7 +174,7 @@ void changeBook(string tempo){  // fungsi untuk menghapus buku berdasarkan judul
     cout<<"==========================================================================================\n";
     cout<<"||    LACI        KODE	      JUDUL BUKU        PENULIS	       TAHUN	    JUMLAH      ||\n";
     cout<<"==========================================================================================\n";
-    while (temp != NULL){   // selama temp tidak NULL
+    while (head != NULL){   // selama temp tidak NULL
         if (temp->data.title == tempo || temp->data.code == tempo){ // jika title atau code temp sama dengan tempo
             cout<<"||  "<<setw(7)<<temp->data.drawer<<setw(10)<<temp->data.code<<setw(16)<<temp->data.title;    // menampilkan data drawer, code, dan title
             cout<<setw(15)<<temp->data.author<<setw(15)<<temp->data.year<<setw(13)<<temp->data.quantity<<"\t||"<<endl;  // menampilkan data author, year, dan quantity
@@ -181,7 +183,18 @@ void changeBook(string tempo){  // fungsi untuk menghapus buku berdasarkan judul
             cout << "Masukan judul baru : ";    getline(cin, tempTitle); temp->data.title=tempTitle;    // meminta inputan user
             cout << "Masukan penulis baru : ";   getline(cin, tempAuthor); temp->data.author=tempAuthor;    // meminta inputan user
             cout << "Masukan tanggal baru: ";     cin >> temp->data.year;   // meminta inputan user
-            cout << "Masukan jumlah baru : ";   cin >> temp->data.quantity;   // meminta inputan user
+            //cout << "Laci ini sudah berisi : " << result.quantity << " buku " << endl;  // menampilkan jumlah buku
+            cout << "Masukan jumlah baru : ";       // meminta inputan user
+            int newQuantity;    // deklarasi variabel newQuantity bertipe integer
+            int totalQuantity = 0;  // deklarasi variabel totalQuantity bertipe integer
+            cin >> newQuantity;   // meminta inputan user
+            Book result = Return("books.txt", temp->data.drawer); // memanggil fungsi return untuk mendapatkan jumlah buku di laci yang sama
+            totalQuantity = result.quantity - temp->data.quantity + newQuantity; // menghitung jumlah buku baru di dalam laci
+            if (totalQuantity > 100) { // jika jumlah buku melebihi batas, tampilkan pesan error
+                cout << "Jumlah buku di dalam satu laci tidak boleh melebihi 100." << endl;
+                return; // keluar dari fungsi
+            }
+            temp->data.quantity = newQuantity; // mengisi quantity temp dengan newQuantity
             cout<<"==========================================================================================\n";
             cout<<"||  "<<setw(7)<<temp->data.drawer<<setw(10)<<temp->data.code<<setw(16)<<temp->data.title;    // menampilkan data drawer, code, dan title
             cout<<setw(15)<<temp->data.author<<setw(15)<<temp->data.year<<setw(13)<<temp->data.quantity<<"\t||"<<endl;  // menampilkan data author, year, dan quantity
@@ -291,7 +304,6 @@ int main(){ // fungsi utama
                 addBook(newBook, "books.txt");  // Menambah buku ke linked list
                 cout << "buku : " << newBook.title << " telah ditambahkan" << endl; // menampilkan pesan
                 saveData("books.txt");  // Menyimpan data buku ke file txt
-                // system("cls");
             }
             break;  // keluar dari perulangan
         }
