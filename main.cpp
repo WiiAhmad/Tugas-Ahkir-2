@@ -131,33 +131,24 @@ void removeBook(string tempo){  // fungsi untuk menghapus buku berdasarkan judul
     cout << endl;   // menampilkan baris kosong
 }
 
-Book Return(string filename, string tempo) {    // fungsi untuk mengembalikan buku
-    ifstream file(filename);    // membuka file
+Book Return(string tempo){
+    Node *temp = head;  // deklarasi variabel temp bertipe Node
     Book newBook;   // deklarasi variabel newBook bertipe Book
-    string line;    // deklarasi variabel line bertipe string
     int totalQuantity = 0;  // deklarasi variabel totalQuantity bertipe integer
-    while (getline(file, line)) {   // selama getline file tidak NULL
-        int pos = 0; // posisi koma
-        string token[5];    // deklarasi variabel token bertipe string
-
-        for (int i = 0; i < 5; i++) {   // selama i kurang dari 5
-            pos = line.find(",");   // mencari posisi koma
-            token[i] = line.substr(0, pos); // mengambil string dari posisi 0 sampai posisi koma
-            line.erase(0, pos + 1); // menghapus string dari posisi 0 sampai posisi koma
-        }
-        newBook.bookcase = token[0];  // mengisi bookcase newBook dengan token[0]
-        newBook.code = token[1];    // mengisi code newBook dengan token[1]
-        newBook.title = token[2];   // mengisi title newBook dengan token[2]
-        newBook.author = token[3];  // mengisi author newBook dengan token[3]
-        newBook.year = stoi(token[4]);  // mengisi year newBook dengan token[4]
-        newBook.quantity = stoi(line);  // mengisi quantity newBook dengan line
+    while(temp != NULL){
+        newBook.bookcase = temp->data.bookcase;  // mengisi bookcase newBook dengan temp->data.bookcase
+        newBook.code = temp->data.code;    // mengisi code newBook dengan temp->data.code
+        newBook.title = temp->data.title;   // mengisi title newBook dengan temp->data.title
+        newBook.author = temp->data.author;  // mengisi author newBook dengan temp->data.author
+        newBook.year = temp->data.year;  // mengisi year newBook dengan temp->data.year
+        newBook.quantity = temp->data.quantity;  // mengisi quantity newBook dengan temp->data.quantity
         if (newBook.bookcase == tempo || newBook.code == tempo || newBook.title == tempo) {
             // Jika lemari sama dengan tempo, tambahkan jumlah buku yang baru saja dibaca
             totalQuantity += newBook.quantity;  
         }
+        temp = temp->next;  // temp diisi dengan next temp
     }
-    // Atur jumlah buku yang baru saja dibaca pada objek buku yang akan dikembalikan
-    newBook.quantity = totalQuantity;   
+    newBook.quantity = totalQuantity;   // mengisi quantity newBook dengan totalQuantity
     return newBook; // Mengembalikan objek buku
 }
 
@@ -179,6 +170,8 @@ void changeBook(string tempo){  // fungsi untuk menghapus buku berdasarkan judul
             cout<<"||  "<<setw(7)<<temp->data.bookcase<<setw(10)<<temp->data.code<<setw(16)<<temp->data.title;    // menampilkan data bookcase, code, dan title
             cout<<setw(15)<<temp->data.author<<setw(15)<<temp->data.year<<setw(13)<<temp->data.quantity<<"\t||"<<endl;  // menampilkan data author, year, dan quantity
             cout<<"==========================================================================================\n\n";
+            Book result = Return(temp->data.bookcase); // memanggil fungsi return untuk mendapatkan jumlah buku di lemari yang sama
+            cout << "Lemari ini sudah berisi : " << result.quantity << " buku " << endl;  // menampilkan jumlah buku
             temp->data.code;    // mengisi code temp
             cout << "Masukan judul baru : ";    getline(cin, tempTitle); temp->data.title=tempTitle;    // meminta inputan user
             cout << "Masukan penulis baru : ";   getline(cin, tempAuthor); temp->data.author=tempAuthor;    // meminta inputan user
@@ -188,10 +181,9 @@ void changeBook(string tempo){  // fungsi untuk menghapus buku berdasarkan judul
             int newQuantity;    // deklarasi variabel newQuantity bertipe integer
             int totalQuantity = 0;  // deklarasi variabel totalQuantity bertipe integer
             cin >> newQuantity;   // meminta inputan user
-            Book result = Return("books.txt", temp->data.bookcase); // memanggil fungsi return untuk mendapatkan jumlah buku di lemari yang sama
             totalQuantity = result.quantity - temp->data.quantity + newQuantity; // menghitung jumlah buku baru di dalam lemari
             if (totalQuantity > 100) { // jika jumlah buku melebihi batas, tampilkan pesan error
-                cout << "Jumlah buku di dalam satu leamri tidak boleh melebihi 100." << endl;
+                cout << "Jumlah buku di dalam satu lemari tidak boleh melebihi 100." << endl;
                 return; // keluar dari fungsi
             }
             temp->data.quantity = newQuantity; // mengisi quantity temp dengan newQuantity
@@ -275,7 +267,8 @@ int main(){ // fungsi utama
             cout << "Masukan nama lemari: ";  // meminta inputan user
             cin.ignore();
             getline(cin, tempo);    // meminta inputan user
-            Book result = Return("books.txt", tempo);   // Mengembalikan buku
+            // Book result = Return("books.txt", tempo);   // Mengembalikan buku
+            Book result = Return(tempo);
             cout << "Lemari ini sudah berisi : " << result.quantity << " buku " << endl;  // menampilkan jumlah buku
             if (result.quantity >= 100){    // jika result.quantity lebih dari sama dengan 100
                 cout << "Lemari telah penuh" << endl;  // menampilkan pesan
