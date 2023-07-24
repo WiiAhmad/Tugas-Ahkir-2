@@ -41,23 +41,20 @@ void displayBooks(){    // fungsi untuk menampilkan semua buku dalam linked list
     system("cls");
     Node *temp = head;  // deklarasi variabel temp bertipe Node
     if (head == NULL){  // jika head bernilai NULL
-        cout<<"==========================================================================================\n";    
-        cout<<"|| 			    TIDAK ADA BUKU YANG DITEMUKAN 			    	||\n";
-        cout<<"==========================================================================================\n";
+        cout<<"==============================================================================================================================================\n";
+        cout<<"|| 		                     	                        TIDAK ADA BUKU YANG DITEMUKAN!!! 		        		                            ||\n";
+        cout<<"==============================================================================================================================================\n";
         return; // keluar dari fungsi
     }
-
-    cout<<"==========================================================================================\n";
-    cout<<"||    LEMARI      KODE	      JUDUL BUKU        PENULIS	       TAHUN	    JUMLAH      ||\n";
-    cout<<"==========================================================================================\n";
-
+    cout<<"==============================================================================================================================================\n";
+    cout<<"||            LEMARI             KODE	             JUDUL BUKU                PENULIS	           TAHUN	              JUMLAH        ||\n";
+    cout<<"==============================================================================================================================================\n";
     while (temp != NULL){   // selama temp tidak NULL
-        cout<<"||  "<<setw(7)<<temp->data.bookcase<<setw(10)<<temp->data.code<<setw(16)<<temp->data.title;    // menampilkan data bookcase, code, dan title
-        cout<<setw(15)<<temp->data.author<<setw(15)<<temp->data.year<<setw(13)<<temp->data.quantity<<"\t||"<<endl;  // menampilkan data author, year, dan quantity
+        cout<<"||  "<<setw(16)<<temp->data.bookcase<<setw(17)<<temp->data.code<<setw(27)<<temp->data.title;    // menampilkan data bookcase, code, dan title
+        cout<<setw(25)<<temp->data.author<<setw(17)<<temp->data.year<<setw(25)<<temp->data.quantity<<"\t||"<<endl;  // menampilkan data author, year, dan quantity
         temp = temp->next;  // temp diisi dengan next temp
     }
-    cout<<"==========================================================================================" << endl;
-    cout << "Ketik apapun untuk kembali ke menu utama :"; cin.ignore(); // menunggu inputan user
+    cout<<"==============================================================================================================================================\n";
     cout << endl;   // menampilkan baris kosong
 }
 
@@ -66,19 +63,19 @@ void searchBook(string tempo){  // fungsi untuk mencari buku berdasarkan judul/k
     system("cls");
     Node *temp = head;  // deklarasi variabel temp bertipe Node
     if (head == NULL){  // jika head bernilai NULL
-        cout<<"==================================================================================\n";
-        cout<<"|| 			TIDAK ADA BUKU YANG DITEMUKAN 				||\n";
-        cout<<"==================================================================================\n";
+        cout<<"==============================================================================================================================================\n";
+        cout<<"|| 		                     	                        TIDAK ADA BUKU YANG DITEMUKAN!!! 		        		                            ||\n";
+        cout<<"==============================================================================================================================================\n";
         return; // keluar dari fungsi
     }
-    cout<<"==========================================================================================\n";
-    cout<<"||    LEMARI      KODE	      JUDUL BUKU        PENULIS	       TAHUN	    JUMLAH      ||\n";
-    cout<<"==========================================================================================\n";
+    cout<<"==============================================================================================================================================\n";
+    cout<<"||            LEMARI             KODE	             JUDUL BUKU                PENULIS	           TAHUN	              JUMLAH        ||\n";
+    cout<<"==============================================================================================================================================\n";
     while (temp != NULL){   // selama temp tidak NULL
         if (temp->data.title == tempo || temp->data.code == tempo){ // jika title atau code temp sama dengan tempo
-            cout<<"||  "<<setw(7)<<temp->data.bookcase<<setw(10)<<temp->data.code<<setw(16)<<temp->data.title;    // menampilkan data bookcase, code, dan title
-            cout<<setw(15)<<temp->data.author<<setw(15)<<temp->data.year<<setw(13)<<temp->data.quantity<<"\t||"<<endl;  // menampilkan data author, year, dan quantity
-            cout<<"==========================================================================================\n";
+            cout<<"||  "<<setw(16)<<temp->data.bookcase<<setw(17)<<temp->data.code<<setw(27)<<temp->data.title;    // menampilkan data bookcase, code, dan title
+            cout<<setw(25)<<temp->data.author<<setw(17)<<temp->data.year<<setw(25)<<temp->data.quantity<<"\t||"<<endl;  // menampilkan data author, year, dan quantity
+            cout<<"==============================================================================================================================================\n";
             cout << "Ketik apapun untuk kembali ke menu utama :"; cin.ignore(); // menunggu inputan user
             return; // keluar dari fungsi
         }
@@ -93,32 +90,31 @@ void removeBook(string tempo){  // fungsi untuk menghapus buku berdasarkan judul
     int a;  // deklarasi variabel a bertipe integer
     Node *del = NULL;   // deklarasi variabel del bertipe Node
     if (head == NULL){  // jika head bernilai NULL
-        cout<<"==================================================================================\n";
-        cout<<"|| 			TIDAK ADA BUKU YANG DITEMUKAN 				||\n";
-        cout<<"==================================================================================\n";
+        cout<<"==============================================================================================================================================\n";
+        cout<<"|| 		                     	                        TIDAK ADA BUKU YANG DITEMUKAN!!! 		        		                            ||\n";
+        cout<<"==============================================================================================================================================\n";
         return; // keluar dari fungsi
     }
     while (temp != NULL){   // selama temp tidak NULL
         if (temp->data.title == tempo || temp->data.code == tempo){ // jika title atau code temp sama dengan tempo
-            cout<<"==================================================================================\n";
-            cout << "||   JUDUL : " << temp->data.title << "   JUMLAH : " << temp->data.quantity << "       ||" << endl;
-            cout<<"==================================================================================\n";
+            cout<<"==============================================================================================================================================\n";
+            cout << "||   \t\tJUDUL : " << temp->data.title << "   \t\tJUMLAH : " << temp->data.quantity << "       \t\t||" << endl;
+            cout<<"==============================================================================================================================================\n";
             cout << "Masukan jumlah yang ingin dihapus :"; cin >> a;    // meminta inputan user
             if(a < temp->data.quantity){    // jika a kurang dari quantity temp
                 temp->data.quantity = temp->data.quantity - a;  // mengurangi quantity temp dengan a
-                cout<<"==================================================================================\n";
-                cout << "||   JUDUL : " << temp->data.title << "   JUMLAH : " << temp->data.quantity << "       ||" << endl;
-                cout<<"==================================================================================\n";
+                cout<<"==============================================================================================================================================\n";
+                cout << "||   \t\tJUDUL : " << temp->data.title << "   \t\tJUMLAH : " << temp->data.quantity << "       \t\t||" << endl;
+                cout<<"==============================================================================================================================================\n";
             }else{  // jika a lebih dari quantity temp
                 if (del == NULL){   // jika del bernilai NULL
                 head = temp->next;  // head diisi dengan next temp
-                }
-                else{
+                }else{
                 del->next = temp->next; // next del diisi dengan next temp
                 }
-                cout<<"==================================================================================\n";
-                cout << "||   JUDUL : " << temp->data.title << "   KODE : " << temp->data.code << "  TELAH DIHAPUS    ||" << endl;
-                cout<<"==================================================================================\n";
+                cout<<"==============================================================================================================================================\n";
+                cout << "||   \t\tJUDUL : " << temp->data.title << "   \t\tKODE : " << temp->data.code << "  \t\tTELAH DIHAPUS    \t\t||" << endl;
+                cout<<"==============================================================================================================================================\n";
                 delete temp;    // menghapus temp
                 return; // keluar dari fungsi
             }
@@ -127,7 +123,6 @@ void removeBook(string tempo){  // fungsi untuk menghapus buku berdasarkan judul
         del = temp;    // del diisi dengan temp
         temp = temp->next;  // temp diisi dengan next temp
     }
-    cout << "Ketik apapun untuk kembali ke menu utama :"; cin.ignore(); // menunggu inputan user
     cout << endl;   // menampilkan baris kosong
 }
 
@@ -157,19 +152,19 @@ void changeBook(string tempo){  // fungsi untuk menghapus buku berdasarkan judul
     Node *temp = head;  // deklarasi variabel temp bertipe Node
     string tempTitle, tempAuthor;   // deklarasi variabel tempTitle dan tempAuthor bertipe string
     if (head == NULL){  // jika head bernilai NULL
-        cout<<"==================================================================================\n";
-        cout<<"|| 			TIDAK ADA BUKU YANG DITEMUKAN!!! 				||\n";
-        cout<<"==================================================================================\n";
+        cout<<"==============================================================================================================================================\n";
+        cout<<"|| 		                     	                        TIDAK ADA BUKU YANG DITEMUKAN!!! 		        		                            ||\n";
+        cout<<"==============================================================================================================================================\n";
         return; // keluar dari fungsi
     }
-    cout<<"==========================================================================================\n";
-    cout<<"||    LEMARI      KODE	      JUDUL BUKU        PENULIS	       TAHUN	    JUMLAH      ||\n";
-    cout<<"==========================================================================================\n";
+    cout<<"==============================================================================================================================================\n";
+    cout<<"||            LEMARI             KODE	             JUDUL BUKU                PENULIS	           TAHUN	              JUMLAH        ||\n";
+    cout<<"==============================================================================================================================================\n";
     while (head != NULL){   // selama temp tidak NULL
         if (temp->data.title == tempo || temp->data.code == tempo){ // jika title atau code temp sama dengan tempo
-            cout<<"||  "<<setw(7)<<temp->data.bookcase<<setw(10)<<temp->data.code<<setw(16)<<temp->data.title;    // menampilkan data bookcase, code, dan title
-            cout<<setw(15)<<temp->data.author<<setw(15)<<temp->data.year<<setw(13)<<temp->data.quantity<<"\t||"<<endl;  // menampilkan data author, year, dan quantity
-            cout<<"==========================================================================================\n\n";
+            cout<<"||  "<<setw(16)<<temp->data.bookcase<<setw(17)<<temp->data.code<<setw(27)<<temp->data.title;    // menampilkan data bookcase, code, dan title
+            cout<<setw(25)<<temp->data.author<<setw(17)<<temp->data.year<<setw(25)<<temp->data.quantity<<"\t||"<<endl;  // menampilkan data author, year, dan quantity
+            cout<<"==============================================================================================================================================\n";
             Book result = Return(temp->data.bookcase); // memanggil fungsi return untuk mendapatkan jumlah buku di lemari yang sama
             cout << "Lemari ini sudah berisi : " << result.quantity << " buku " << endl;  // menampilkan jumlah buku
             temp->data.code;    // mengisi code temp
@@ -187,10 +182,10 @@ void changeBook(string tempo){  // fungsi untuk menghapus buku berdasarkan judul
                 return; // keluar dari fungsi
             }
             temp->data.quantity = newQuantity; // mengisi quantity temp dengan newQuantity
-            cout<<"==========================================================================================\n";
-            cout<<"||  "<<setw(7)<<temp->data.bookcase<<setw(10)<<temp->data.code<<setw(16)<<temp->data.title;    // menampilkan data bookcase, code, dan title
-            cout<<setw(15)<<temp->data.author<<setw(15)<<temp->data.year<<setw(13)<<temp->data.quantity<<"\t||"<<endl;  // menampilkan data author, year, dan quantity
-            cout<<"==========================================================================================\n";
+            cout<<"==============================================================================================================================================\n";
+            cout<<"||  "<<setw(16)<<temp->data.bookcase<<setw(17)<<temp->data.code<<setw(27)<<temp->data.title;    // menampilkan data bookcase, code, dan title
+            cout<<setw(25)<<temp->data.author<<setw(17)<<temp->data.year<<setw(25)<<temp->data.quantity<<"\t||"<<endl;  // menampilkan data author, year, dan quantity
+            cout<<"==============================================================================================================================================\n";
             return; // keluar dari fungsi
         }
         temp = temp->next;  // temp diisi dengan next temp
@@ -247,18 +242,18 @@ int main(){ // fungsi utama
     loadData("books.txt"); // Memuat data buku dari file txt
     int choice;
     do{ // Menampilkan menu
-        cout<<"==========================================================================================\n";
-        cout << "||                                     MENU PERPUSTAKAAN                                ||" << endl;
-        cout<<"==========================================================================================\n";
-        cout << "||                 1. Menambahkan buku                                                  ||" << endl;
-        cout << "||                 2. Tampilkan semua buku                                              ||" << endl;
-        cout << "||                 3. Mencari buku                                                      ||" << endl;
-        cout << "||                 4. Hapus buku                                                        ||" << endl;
-        cout << "||                 5. Mengganti buku                                                    ||" << endl;
-        cout << "||                 6. Keluar                                                            ||" << endl;
-        cout<<"==========================================================================================\n";
+        cout<<"==============================================================================================================================================\n";
+        cout << "||                                                         MENU PERPUSTAKAAN                                                                ||" << endl;
+        cout<<"==============================================================================================================================================\n";
+        cout << "||                                              1. Menambahkan buku                                                                         ||" << endl;
+        cout << "||                                              2. Tampilkan semua buku                                                                     ||" << endl;
+        cout << "||                                              3. Mencari buku                                                                             ||" << endl;
+        cout << "||                                              4. Hapus buku                                                                               ||" << endl;
+        cout << "||                                              5. Mengganti buku                                                                           ||" << endl;
+        cout << "||                                              6. Keluar                                                                                   ||" << endl;
+        cout<<"==============================================================================================================================================\n";
         cout << "Masukan pilihan anda: "; cin >> choice;    // meminta inputan user
-        // system("cls");
+        system("cls");
         switch (choice){    // memilih menu
         case 1:{    // Menambahkan buku
             Book newBook;   // deklarasi variabel newBook bertipe Book
