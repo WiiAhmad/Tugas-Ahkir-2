@@ -1,0 +1,47 @@
+# will focusing this later
+
+# registries: |
+#   - url: https://containers.GHEHOSTNAME1/v2/
+#     packages:
+#     - my-company/*
+#     - my-company2/*
+#       token: \$\{{ secrets.GHEHOSTNAME1_TOKEN }}
+
+#     - url: https://ghcr.io/v2/
+#       packages: */*
+#       token: \$\{{ secrets.GHCR_TOKEN }}
+
+packs:
+    # Use these packs 
+    javascript:
+      - codeql/javascript-experimental-atm-queries
+      # disable this since only need queries
+      #- codeql/javascript-all
+      - codeql/javascript-queries
+      # test a tutorial 
+      #- codeql/tutorial
+    python:
+      - codeql/python-queries
+      #- codeql/python-all
+      #- codeql/python-upgrades
+    go:
+      - codeql/go-queries
+      #- codeql/go-all
+      #- codeql/go-upgrade
+  
+  # query-filters:
+  # - exclude:
+  #     problem.severity:
+  #       - note
+  #       - warning
+  
+  disable-default-queries: true
+  trap-caching: false
+  setup-python-dependencies: false
+  # list of queries 
+  queries:
+    - uses: security-and-quality
+    - uses: security-experimental
+    # disable extended for a tmp
+    #- uses: security-extended
+  

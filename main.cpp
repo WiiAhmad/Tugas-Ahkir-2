@@ -34,6 +34,7 @@ void addBook(Book newBook, string filename){    // fungsi untuk menambah buku ke
         temp = temp->next;  // temp diisi dengan next temp
     }
     temp->next = newNode;   // next temp diisi dengan newNode
+    //test
 }
 
 // Deklarasi fungsi untuk menampilkan semua buku dalam linked list
