@@ -81,6 +81,7 @@ void searchBook(string tempo){  // fungsi untuk mencari buku berdasarkan judul/k
             return; // keluar dari fungsi
         }
         temp = temp->next;  // temp diisi dengan next temp
+        //tst code ql 3
     }
 }
 
