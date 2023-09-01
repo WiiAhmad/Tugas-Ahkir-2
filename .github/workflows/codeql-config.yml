@@ -13,35 +13,34 @@
 
 packs:
     # Use these packs 
-    javascript:
+  javascript:
       - codeql/javascript-experimental-atm-queries
       # disable this since only need queries
       #- codeql/javascript-all
       - codeql/javascript-queries
       # test a tutorial 
       #- codeql/tutorial
-    python:
+  python:
       - codeql/python-queries
       #- codeql/python-all
       #- codeql/python-upgrades
-    go:
+  go:
       - codeql/go-queries
       #- codeql/go-all
       #- codeql/go-upgrade
-  
   # query-filters:
   # - exclude:
   #     problem.severity:
   #       - note
   #       - warning
   
-  disable-default-queries: true
-  trap-caching: false
-  setup-python-dependencies: false
+disable-default-queries: true
+trap-caching: true
+setup-python-dependencies: false
   # list of queries 
   queries:
-    - uses: security-and-quality
-    - uses: security-experimental
+  - uses: security-and-quality
+  - uses: security-experimental
     # disable extended for a tmp
     #- uses: security-extended
   

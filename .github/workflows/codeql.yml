@@ -1,10 +1,10 @@
-name: "CodeQL-Security"
-author: "kfear1337"
-description: "GitHub Actions workflow for CodeQL security analysis."
+#name: "CodeQL-Security"
+#author: "kfear1337"
+#description: "GitHub Actions workflow for CodeQL security analysis."
 
-branding:
-  icon: "activity"
-  color: "blue"
+#branding:
+  #icon: "activity"
+  #color: "blue"
 
 on:
   push:
